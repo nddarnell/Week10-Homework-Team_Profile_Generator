@@ -1,0 +1,25 @@
+{
+  "name": "week10-homework-team_profile_generator",
+  "version": "1.0.0",
+  "description": "Team Profile Generator using node.js, inquirer and oop",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nddarnell/Week10-Homework-Team_Profile_Generator.git"
+  },
+  "author": "Nathan Darnell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nddarnell/Week10-Homework-Team_Profile_Generator/issues"
+  },
+  "homepage": "https://github.com/nddarnell/Week10-Homework-Team_Profile_Generator#readme",
+  "devDependencies": {
+    "jest": "^26.0.0"
+  },
+  "dependencies": {
+    "inquirer": "^7.1.0"
+  }
+}
