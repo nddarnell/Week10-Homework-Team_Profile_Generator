@@ -31,7 +31,7 @@ function userPrompt() {
 userPrompt()
     .then((results) => {
         // console.log(results.jobDescription)
-        return results.jobDescription
+        return [results.jobDescription, results.name]
     })
     .then((jobDescription) => {
         switch (jobDescription) {
@@ -52,6 +52,13 @@ userPrompt()
                     message: "What is the Managers office number?"
                 }
                 ])
+                // is this correct?
+                const newManager = new Manager(`${name}`, `${id}`, `${email}`, `${managerNumber}`)
+                // not working
+                fs.writeFile('test.txt', newManager, (err)=>{
+                    if (err) throw (err)
+                })
+                
                 return [jobDescription.id, jobDescription.email, jobDescription.managerNumber]
             
             case 'Engineer':
@@ -71,6 +78,8 @@ userPrompt()
                     message: "What is the Engineers github account?"
                 }
                 ])
+                const newEngineer = new Engineer(`${name}`, `${id}`, `${email}`, `${engineerGitHub}`)
+
                 return [jobDescription.id, jobDescription.email, jobDescription.engineerGitHub]
                 
             case 'Intern':
@@ -90,43 +99,16 @@ userPrompt()
                     message: "What school did the intern go to?"
                 }
                 ])
+                const newIntern = new Intern(`${name}`, `${id}`, `${email}`, `${internSchool}`)
+
                 return [jobDescription.id, jobDescription.email, jobDescription.internSchool]
         }
-        
 
-        // jobStatus = jobDescription
-        // if (jobStatus === 'Manager'){
-        //     inquirer.prompt([{
-        //         type: "input",
-        //         // trying to pull this information out without using return
-        //         name: "id",
-        //         message: "What is the Managers ID number?"
-        //     },
-        //     {
-        //         type: "input",
-        //         name: "email",
-        //         message: "What is the Managers email?"
-        //     },
-        //     {
-        //         type: "input",
-        //         name: "officenumber",
-        //         message: "What is the Managers office number?"
-        //     }
-        //     ])
-
-        //     // this below doesnt work
-        //     if(jobDescription.id > 0){
-        //         console.log(jobDescription.id)
-        //     }
-
-        // }
     
     })
-    // this doesnt work below..
-    .then((managerNumber) => {
-        fs.writeFile('test.txt', managerNumber, (err)=>{
-            if (err) throw (err)
-        })
+    
+    .then(() => {
+        
     })
     .then(()=>{
         
