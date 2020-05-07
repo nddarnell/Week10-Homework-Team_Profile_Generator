@@ -13,6 +13,124 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+function userPrompt() {
+    return inquirer.prompt([{
+        type: "input",
+        name: "name",
+        message: "What is the employees name?"
+    },
+    {
+        type: "list",
+        name: "jobDescription",
+        message: "What role is your new employee joining?",
+        choices: ['Manager', 'Engineer', 'Intern']
+    }
+    ]
+    )
+}
+userPrompt()
+    .then((results) => {
+        // console.log(results.jobDescription)
+        return results.jobDescription
+    })
+    .then((jobDescription) => {
+        switch (jobDescription) {
+            case 'Manager':
+                inquirer.prompt([{
+                    type: "input",
+                    name: "id",
+                    message: "What is the Managers ID number?"
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "What is the Managers email?"
+                },
+                {
+                    type: "input",
+                    name: "managerNumber",
+                    message: "What is the Managers office number?"
+                }
+                ])
+                return [jobDescription.id, jobDescription.email, jobDescription.managerNumber]
+            
+            case 'Engineer':
+                inquirer.prompt([{
+                    type: "input",
+                    name: "id",
+                    message: "What is the Engineers ID number?"
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "What is the Engineers email?"
+                },
+                {
+                    type: "input",
+                    name: "engineerGitHub",
+                    message: "What is the Engineers github account?"
+                }
+                ])
+                return [jobDescription.id, jobDescription.email, jobDescription.engineerGitHub]
+                
+            case 'Intern':
+                inquirer.prompt([{
+                    type: "input",
+                    name: "id",
+                    message: "What is the Intern's ID number?"
+                },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "What is the Intern's email?"
+                },
+                {
+                    type:"input",
+                    name: "internSchool",
+                    message: "What school did the intern go to?"
+                }
+                ])
+                return [jobDescription.id, jobDescription.email, jobDescription.internSchool]
+        }
+        
+
+        // jobStatus = jobDescription
+        // if (jobStatus === 'Manager'){
+        //     inquirer.prompt([{
+        //         type: "input",
+        //         // trying to pull this information out without using return
+        //         name: "id",
+        //         message: "What is the Managers ID number?"
+        //     },
+        //     {
+        //         type: "input",
+        //         name: "email",
+        //         message: "What is the Managers email?"
+        //     },
+        //     {
+        //         type: "input",
+        //         name: "officenumber",
+        //         message: "What is the Managers office number?"
+        //     }
+        //     ])
+
+        //     // this below doesnt work
+        //     if(jobDescription.id > 0){
+        //         console.log(jobDescription.id)
+        //     }
+
+        // }
+    
+    })
+    // this doesnt work below..
+    .then((managerNumber) => {
+        fs.writeFile('test.txt', managerNumber, (err)=>{
+            if (err) throw (err)
+        })
+    })
+    .then(()=>{
+        
+    })
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
