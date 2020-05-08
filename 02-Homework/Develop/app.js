@@ -29,12 +29,14 @@ function userPrompt() {
     )
 }
 userPrompt()
+    // .then((results) => {
+    //     // console.log(results.jobDescription)
+    //     return results.jobDescription
+    // })
     .then((results) => {
-        // console.log(results.jobDescription)
-        return [results.jobDescription, results.name]
-    })
-    .then((jobDescription) => {
-        switch (jobDescription) {
+        console.log(results.jobDescription)
+        console.log(results.name)
+        switch (results.jobDescription) {
             case 'Manager':
                 inquirer.prompt([{
                     type: "input",
@@ -52,15 +54,17 @@ userPrompt()
                     message: "What is the Managers office number?"
                 }
                 ])
-                // is this correct?
-                const newManager = new Manager(`${name}`, `${id}`, `${email}`, `${managerNumber}`)
-                // not working
-                fs.writeFile('test.txt', newManager, (err)=>{
-                    if (err) throw (err)
+                //THIS WORKS USE THIS AS AN EXAMPLE
+                .then((resultsManager)=>{
+                    console.log(resultsManager.id)
+                    const newMan = new Manager(results.name, resultsManager.id, resultsManager.email, resultsManager.managerNumber)
+                    // render([newMan])
+                    // console.log(render([newMan]))
+                    fs.writeFile('manager.html', render([newMan]), (err)=>{
+                        if (err) throw (err)
+                    })
                 })
-                
-                return [jobDescription.id, jobDescription.email, jobDescription.managerNumber]
-            
+            break;
             case 'Engineer':
                 inquirer.prompt([{
                     type: "input",
@@ -78,10 +82,10 @@ userPrompt()
                     message: "What is the Engineers github account?"
                 }
                 ])
-                const newEngineer = new Engineer(`${name}`, `${id}`, `${email}`, `${engineerGitHub}`)
+                // const newEngineer = new Engineer(`${name}`, `${id}`, `${email}`, `${engineerGitHub}`)
 
-                return [jobDescription.id, jobDescription.email, jobDescription.engineerGitHub]
-                
+                // return [jobDescription.id, jobDescription.email, jobDescription.engineerGitHub]
+            break;
             case 'Intern':
                 inquirer.prompt([{
                     type: "input",
