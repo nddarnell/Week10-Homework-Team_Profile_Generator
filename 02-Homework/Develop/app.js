@@ -29,10 +29,8 @@ function userPrompt() {
     )
 }
 userPrompt()
-    // .then((results) => {
-    //     // console.log(results.jobDescription)
-    //     return results.jobDescription
-    // })
+    
+    
     .then((results) => {
         console.log(results.jobDescription)
         console.log(results.name)
@@ -52,11 +50,18 @@ userPrompt()
                     type: "input",
                     name: "managerNumber",
                     message: "What is the Managers office number?"
+                },
+                {
+                    type: "list",
+                    name: "add",
+                    message: "Do you want to add another employee?",
+                    choices: ['yes', 'no']
                 }
                 ])
                 //THIS WORKS USE THIS AS AN EXAMPLE
                 .then((resultsManager)=>{
                     console.log(resultsManager.id)
+                    console.log(resultsManager.add)
                     const newMan = new Manager(results.name, resultsManager.id, resultsManager.email, resultsManager.managerNumber)
                     // render([newMan])
                     // console.log(render([newMan]))
