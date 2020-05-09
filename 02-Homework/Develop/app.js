@@ -7,6 +7,10 @@ const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+let managerList = [];
+let engineerList = [];
+let internList = [];
+
 
 const render = require("./lib/htmlRenderer");
 
@@ -60,16 +64,19 @@ function userPrompt() {
                     // console.log(resultsManager.add)
                     const newMan = new Manager(results.name, resultsManager.id, resultsManager.email, resultsManager.managerNumber)
     
-                    fs.appendFile('newmanager.html', render([newMan]), (err)=>{
-                        if (err) throw (err)
-                    })
+                    managerList.push(newMan)
 
                     if (resultsManager.add === 'yes'){
                         userPrompt();
                     }else{
-                        fs.writeFile(outputPath, 'newmanager.html', (err)=>{
+                        
+                        // let manL = render(managerList)
+                        
+
+                        fs.writeFile(outputPath, listOfPeople(), (err)=>{
                             if (err) throw (err)
                         })
+                        
                         // do we need to add all file paths here?
                     }
                     
@@ -169,6 +176,11 @@ function userPrompt() {
 }
 userPrompt()
 
+function listOfPeople(){
+    render(managerList)
+    render(engineerList)
+    render(internList)
+}
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
