@@ -31,156 +31,168 @@ function userPrompt() {
     }
     ]
     )
-    .then((results) => {
-        // console.log(results.jobDescription)
-        // console.log(results.name)
-        switch (results.jobDescription) {
-            case 'Manager':
-                inquirer.prompt([{
-                    type: "input",
-                    name: "id",
-                    message: "What is the Managers ID number?"
-                },
-                {
-                    type: "input",
-                    name: "email",
-                    message: "What is the Managers email?"
-                },
-                {
-                    type: "input",
-                    name: "managerNumber",
-                    message: "What is the Managers office number?"
-                },
-                {
-                    type: "list",
-                    name: "add",
-                    message: "Do you want to add another employee?",
-                    choices: ['yes', 'no']
-                }
-                ])
-                
-                .then((resultsManager)=>{
-                    // console.log(resultsManager.id)
-                    // console.log(resultsManager.add)
-                    const newMan = new Manager(results.name, resultsManager.id, resultsManager.email, resultsManager.managerNumber)
-    
-                    managerList.push(newMan)
-
-                    if (resultsManager.add === 'yes'){
-                        userPrompt();
-                    }else{
-                        
-                        // let manL = render(managerList)
-                        
-
-                        fs.writeFile(outputPath, listOfPeople(), (err)=>{
-                            if (err) throw (err)
-                        })
-                        
-                        // do we need to add all file paths here?
+        .then((results) => {
+            // console.log(results.jobDescription)
+            // console.log(results.name)
+            switch (results.jobDescription) {
+                case 'Manager':
+                    inquirer.prompt([{
+                        type: "input",
+                        name: "id",
+                        message: "What is the Managers ID number?"
+                    },
+                    {
+                        type: "input",
+                        name: "email",
+                        message: "What is the Managers email?"
+                    },
+                    {
+                        type: "input",
+                        name: "managerNumber",
+                        message: "What is the Managers office number?"
+                    },
+                    {
+                        type: "list",
+                        name: "add",
+                        message: "Do you want to add another employee?",
+                        choices: ['yes', 'no']
                     }
-                    
-                    
-                })
-            break;
-            case 'Engineer':
-                inquirer.prompt([{
-                    type: "input",
-                    name: "id",
-                    message: "What is the Engineers ID number?"
-                },
-                {
-                    type: "input",
-                    name: "email",
-                    message: "What is the Engineers email?"
-                },
-                {
-                    type: "input",
-                    name: "engineerGitHub",
-                    message: "What is the Engineers github account?"
-                },
-                {
-                    type: "list",
-                    name: "add",
-                    message: "Do you want to add another employee?",
-                    choices: ['yes', 'no']
-                }
-                ])
-                .then((resultsEngineer)=>{
-                    const newEng = new Engineer(results.name, resultsEngineer.id, resultsEngineer.email, resultsEngineer.engineerGitHub)
+                    ])
 
-                    fs.appendFile('newengineer.html', render([newEng]), (err)=>{
-                        if (err) throw (err)
-                    })
+                        .then((resultsManager) => {
+                            // console.log(resultsManager.id)
+                            // console.log(resultsManager.add)
+                            const newMan = new Manager(results.name, resultsManager.id, resultsManager.email, resultsManager.managerNumber)
 
-                    if (resultsEngineer.add === 'yes'){
-                        userPrompt();
-                    }else{
-                        fs.writeFile(outputPath, 'newengineer.html', (err)=>{
-                            if (err) throw (err)
+                            managerList.push(newMan)
+
+                            if (resultsManager.add === 'yes') {      
+
+                                userPrompt();    
+
+                            } else {
+                                
+                                // let manL = render(managerList)
+                                // //manL goes in listofPeople() spot
+                                // fs.writeFile(outputPath, manL, (err) => {
+                                //     if (err) throw (err)
+                                // })
+
+                                writeArea();
+
+                            }
+
+
                         })
-                        // do we need to add all file paths here?
+                    break;
+                case 'Engineer':
+                    inquirer.prompt([{
+                        type: "input",
+                        name: "id",
+                        message: "What is the Engineers ID number?"
+                    },
+                    {
+                        type: "input",
+                        name: "email",
+                        message: "What is the Engineers email?"
+                    },
+                    {
+                        type: "input",
+                        name: "engineerGitHub",
+                        message: "What is the Engineers github account?"
+                    },
+                    {
+                        type: "list",
+                        name: "add",
+                        message: "Do you want to add another employee?",
+                        choices: ['yes', 'no']
                     }
-                    
+                    ])
+                        .then((resultsEngineer) => {
+                            const newEng = new Engineer(results.name, resultsEngineer.id, resultsEngineer.email, resultsEngineer.engineerGitHub)
 
-                })
-    
-            break;
-            case 'Intern':
-                inquirer.prompt([{
-                    type: "input",
-                    name: "id",
-                    message: "What is the Intern's ID number?"
-                },
-                {
-                    type: "input",
-                    name: "email",
-                    message: "What is the Intern's email?"
-                },
-                {
-                    type:"input",
-                    name: "internSchool",
-                    message: "What school did the intern go to?"
-                },
-                {
-                    type: "list",
-                    name: "add",
-                    message: "Do you want to add another employee?",
-                    choices: ['yes', 'no']
-                }
-                ])
-                .then((resultsIntern)=>{
-                    const newInt = new Intern(results.name, resultsIntern.id, resultsIntern.email, resultsIntern.internSchool)
+                            engineerList.push(newEng)
 
-                    fs.appendFile('newintern.html', render([newInt]), (err)=>{
-                        if (err) throw (err)
-                    })
-                    
+                            if (resultsEngineer.add === 'yes') {
+                                
+                                userPrompt();
+                                
+                            } else {
+
+                                // let engL = render(engineerList)
+
+                                // fs.writeFile(outputPath, engL, (err) => {
+                                //     if (err) throw (err)
+                                // })
+
+                                writeArea();
+
+                            }
 
 
-                    if (resultsIntern.add === 'yes'){
-                        userPrompt();
-                    }else{
-                        fs.writeFile(outputPath, 'newintern.html', (err)=>{
-                            if (err) throw (err);
                         })
-                        // do we need to add all file paths here?
-                    }
-                    
 
-                })
-        }
-    
-    
-    })
+                    break;
+                case 'Intern':
+                    inquirer.prompt([{
+                        type: "input",
+                        name: "id",
+                        message: "What is the Intern's ID number?"
+                    },
+                    {
+                        type: "input",
+                        name: "email",
+                        message: "What is the Intern's email?"
+                    },
+                    {
+                        type: "input",
+                        name: "internSchool",
+                        message: "What school did the intern go to?"
+                    },
+                    {
+                        type: "list",
+                        name: "add",
+                        message: "Do you want to add another employee?",
+                        choices: ['yes', 'no']
+                    }
+                    ])
+                        .then((resultsIntern) => {
+                            const newInt = new Intern(results.name, resultsIntern.id, resultsIntern.email, resultsIntern.internSchool)
+
+                            internList.push(newInt)
+
+                            if (resultsIntern.add === 'yes') {
+                              
+                                userPrompt();
+                                                                
+                            } else {
+
+                                // let intL = render(internList)
+
+                                // fs.writeFile(outputPath, intL, (err) => {
+                                //     if (err) throw (err);
+                                // })
+
+                                writeArea();
+
+                            }
+                        })
+            }
+        })
 }
 userPrompt()
 
-function listOfPeople(){
-    render(managerList)
-    render(engineerList)
-    render(internList)
+function writeArea(){
+    let manL = render(managerList)
+    let engL = render(engineerList)
+    let intL = render(internList)
+    const list = [manL, engL, intL]
+    fs.writeFile(outputPath, list, (err)=>{
+        if (err) throw (err)
+    })
+    
 }
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
