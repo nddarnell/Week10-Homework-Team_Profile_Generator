@@ -183,11 +183,15 @@ function userPrompt() {
 userPrompt()
 
 function writeArea(){
-    let manL = render(managerList)
-    let engL = render(engineerList)
-    let intL = render(internList)
-    const list = [manL, engL, intL]
-    fs.writeFile(outputPath, list, (err)=>{
+    // let manL = render(managerList)
+    // let engL = render(engineerList)
+    // let intL = render(internList)
+    // const list = [manL, engL, intL]
+    // or push all employees to one list
+    const list = managerList.concat(engineerList, internList)
+    let html = render(list)
+
+    fs.writeFile(outputPath, html, (err)=>{
         if (err) throw (err)
     })
     
